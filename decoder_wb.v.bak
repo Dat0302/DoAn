@@ -1,0 +1,10 @@
+module decoder_wb (
+    input  [31:0] addr,
+    output        sel_ram,
+    output        sel_gpio,
+    output        sel_uart
+);
+    assign sel_ram  = (addr[31:16] == 16'h0000);  // RAM: 0x0000_xxxx
+    assign sel_gpio = (addr[31:16] == 16'h1000);  // GPIO: 0x1000_xxxx
+    assign sel_uart = (addr[31:16] == 16'h2000);  // UART: 0x2000_xxxx
+endmodule

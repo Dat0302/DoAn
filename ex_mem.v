@@ -1,0 +1,50 @@
+module ex_mem (
+    input clk,
+    input rst_n,
+    input [31:0] pc_in,
+    input [31:0] alu_result_in,
+    input [31:0] reg2_in,
+	 input [31:0] instr_in,
+    input RegWrite_in, MemToReg_in, MemRead_in, MemWrite_in,
+    input Branch_in, Jump_in,
+	 input [31:0] pcBranch_in,
+	 input [31:0] jumpaddr_in,
+	 output reg [31:0] jumpaddr_out,
+	 output reg [31:0] pcBranch_out,
+    output reg [31:0] pc_out,
+    output reg [31:0] alu_result_out,
+    output reg [31:0] reg2_out,
+    output reg RegWrite_out, MemToReg_out, MemRead_out, MemWrite_out,
+    output reg Branch_out, Jump_out,
+	 output reg [31:0] instr_out
+);
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            pc_out <= 0;
+            alu_result_out <= 0;
+            reg2_out <= 0;
+            RegWrite_out <= 0;
+            MemToReg_out <= 0;
+            MemRead_out <= 0;
+            MemWrite_out <= 0;
+            Branch_out <= 0;
+            Jump_out <= 0;
+				instr_out <=0;
+				pcBranch_out<=0;
+				jumpaddr_out <=0;
+        end else begin
+            pc_out <= pc_in;
+            alu_result_out <= alu_result_in;
+            reg2_out <= reg2_in;
+            RegWrite_out <= RegWrite_in;
+            MemToReg_out <= MemToReg_in;
+            MemRead_out <= MemRead_in;
+            MemWrite_out <= MemWrite_in;
+            Branch_out <= Branch_in;
+            Jump_out <= Jump_in;
+				instr_out <=instr_in;
+				pcBranch_out <= pcBranch_in;
+				jumpaddr_out <= jumpaddr_in;
+        end
+    end
+endmodule

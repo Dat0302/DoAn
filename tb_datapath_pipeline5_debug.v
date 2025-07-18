@@ -1,0 +1,54 @@
+`timescale 1ns / 1ps
+
+module tb_datapath_pipeline5_debug();
+
+  reg clk;
+  reg rst_n;
+
+  wire [31:0] instr, instr_if_id, instr_ex, instr_mem, instr_wb;
+  wire [31:0] signImm, aluResult_ex, alu_result_mem;
+  wire Branch_mem, Jump_mem, ifbranch;
+  wire [31:0] alu_in1, alu_in2;
+
+  // Instantiate your DUT
+  datapath_pipeline5_debug dut (
+    .clk(clk),
+    .rst_n(rst_n),
+    .instr(instr),
+    .instr_if_id(instr_if_id),
+    .instr_ex(instr_ex),
+    .instr_mem(instr_mem),
+    .instr_wb(instr_wb),
+    .signImm(signImm),
+    .aluResult_ex(aluResult_ex),
+    .alu_result_mem(alu_result_mem),
+    .Branch_mem(Branch_mem),
+    .Jump_mem(Jump_mem),
+    .ifbranch(ifbranch),
+    .alu_in1(alu_in1),
+    .alu_in2(alu_in2)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk;
+
+  initial begin
+    // Init
+    clk = 0;
+    rst_n = 0;
+
+    // Reset phase
+    #10;
+    rst_n = 1;
+
+    // Let simulation run long enough
+    #200;
+
+    $finish;
+  end
+
+    initial begin
+        $monitor("Time=%0t, rst_n=%b, instr=%h, instr_if_id=%h, instr_ex=%h, instr_mem=%h, instr_wb=%h, aluResult_ex=%d, alu_result_mem=%d, Branch_mem=%b, signImm=%d,  Jump_mem=%b,  ifbranch=%b",
+                 $time, rst_n, instr, instr_if_id, instr_ex, instr_mem, instr_wb, aluResult_ex, alu_result_mem, Branch_mem, signImm, Jump_mem, ifbranch);
+	end
+endmodule

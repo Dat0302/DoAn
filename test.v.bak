@@ -1,0 +1,8 @@
+module test(
+		input clk,
+		output rd,
+);
+	rom rom1
+	(.a(addr),
+	.rd(rd));
+endmodule

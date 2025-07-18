@@ -1,0 +1,48 @@
+// Testbench for UART
+// ========================
+module tb_uart;
+
+    reg clk, rst;
+    reg [31:0] wb_adr_i;
+    reg [31:0] wb_dat_i;
+    wire [31:0] wb_dat_o;
+    reg wb_we_i, wb_stb_i, wb_cyc_i;
+    wire wb_ack_o;
+
+    wire tx;
+    reg  rx;
+
+    // UART loopback
+    always @(posedge clk)
+        rx <= tx;
+
+    // Clock
+    always #5 clk = ~clk;
+
+    wb_uart dut (
+        .clk(clk), .rst(rst),
+        .wb_adr_i(wb_adr_i), .wb_dat_i(wb_dat_i), .wb_dat_o(wb_dat_o),
+        .wb_we_i(wb_we_i), .wb_stb_i(wb_stb_i), .wb_cyc_i(wb_cyc_i), .wb_ack_o(wb_ack_o),
+        .tx(tx), .rx(rx)
+    );
+
+    initial begin
+        $display("=== UART Test ===");
+        clk = 0; rst = 1;
+        wb_we_i = 0; wb_stb_i = 0; wb_cyc_i = 0;
+        wb_adr_i = 32'h00009000; wb_dat_i = 0;
+        rx = 1;
+        #20 rst = 0;
+
+        // Send 0x55
+        #10 wb_dat_i = 32'h00000055;
+            wb_we_i = 1; wb_stb_i = 1; wb_cyc_i = 1;
+        #10 wb_we_i = 0; wb_stb_i = 0; wb_cyc_i = 0;
+
+        // Wait for UART transmission and reception
+        #200;
+
+        $display("UART Received = %h", wb_dat_o);
+        $finish;
+    end
+endmodule

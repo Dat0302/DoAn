@@ -1,0 +1,53 @@
+# Reading C:/altera/13.0sp1/modelsim_ase/tcl/vsim/pref.tcl 
+# do RISCV_run_msim_rtl_verilog.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/gpio.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module gpio
+# 
+# Top level modules:
+# 	gpio
+# vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/wb_gpio1.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module wb_gpio1
+# 
+# Top level modules:
+# 	wb_gpio1
+# 
+# vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/tb_gpio.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module tb_gpio
+# 
+# Top level modules:
+# 	tb_gpio
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver -L rtl_work -L work -voptargs="+acc"  tb_gpio
+# vsim -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver -L rtl_work -L work -voptargs=\"+acc\" -t 1ps tb_gpio 
+# Loading work.tb_gpio
+# Loading work.wb_gpio1
+# Loading work.gpio
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# === GPIO Test ===
+# GPIO Output = 12345678 , Data Out = a5a5a5a5  
+# ** Note: $finish    : D:/RISCV/tb_gpio.v(43)
+#    Time: 80 ps  Iteration: 0  Instance: /tb_gpio
+# 1
+# Break in Module tb_gpio at D:/RISCV/tb_gpio.v line 43
+# Simulation Breakpoint: 1
+# Break in Module tb_gpio at D:/RISCV/tb_gpio.v line 43
+# MACRO ./RISCV_run_msim_rtl_verilog.do PAUSED at line 18

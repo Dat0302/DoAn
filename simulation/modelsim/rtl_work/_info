@@ -1,0 +1,65 @@
+m255
+K3
+13
+cModel Technology
+Z0 dD:\RISCV\simulation\modelsim
+vgpio
+IK3SEST?TmRFZF@cj65TKW3
+VM>lfAl=eRb1`b]o1YNW^<1
+Z1 dD:\RISCV\simulation\modelsim
+w1750653575
+8D:/RISCV/gpio.v
+FD:/RISCV/gpio.v
+L0 1
+Z2 OV;L;10.1d;51
+r1
+31
+Z3 o-vlog01compat -work work -O0
+Z4 !s92 -vlog01compat -work work +incdir+D:/RISCV -O0
+!i10b 1
+!s100 C0M@M]Xm;RTBbKhE<Ka272
+!s85 0
+!s108 1750659758.400000
+!s107 D:/RISCV/gpio.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+D:/RISCV|D:/RISCV/gpio.v|
+!s101 -O0
+vtb_gpio
+!i10b 1
+!s100 Nd;L:3ToDFN:K>EmfJdPG2
+I`1YFHHiE8^l`K;nk73FGB0
+V6GK6`25o`4_@eiHGdoG:>0
+R1
+w1750654156
+8D:/RISCV/tb_gpio.v
+FD:/RISCV/tb_gpio.v
+L0 3
+R2
+r1
+!s85 0
+31
+!s108 1750659758.479000
+!s107 D:/RISCV/tb_gpio.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+D:/RISCV|D:/RISCV/tb_gpio.v|
+!s101 -O0
+R3
+R4
+vwb_gpio1
+Im6;cBc89NF6b:PjLRgklg2
+VA0?ei_>jH3NQXJemgHJhF2
+R1
+w1750650937
+8D:/RISCV/wb_gpio1.v
+FD:/RISCV/wb_gpio1.v
+L0 1
+R2
+r1
+31
+R3
+R4
+!i10b 1
+!s100 M9TVlEGGGc7L7LTDodFOF0
+!s85 0
+!s108 1750659758.432000
+!s107 D:/RISCV/wb_gpio1.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+D:/RISCV|D:/RISCV/wb_gpio1.v|
+!s101 -O0

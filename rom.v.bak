@@ -1,0 +1,16 @@
+module rom (
+	input wire [5:0]  imAddr,
+	input wire clk,
+   output reg [31:0] imData 
+);
+
+   reg [31:0] rom [63:0];
+
+	initial begin
+		//$readmemh("program.hex", rom);
+	end
+	
+   always @(posedge clk) begin
+        imData <= rom[imAddr];
+   end
+endmodule

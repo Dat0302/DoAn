@@ -1,0 +1,80 @@
+module top_module (
+    input         clk,
+    input         rst,
+    input  [15:0] gpioInput,
+    output [15:0] gpioOutput
+);
+
+    // ===== Wires giữa CPU và Bus =====
+    wire [31:0] instr, pc, pcNext, aluResult;
+    wire [31:0] bAddr, bWData, bRData;
+    wire [5:0]  bSel;
+    wire        memWrite;
+
+    // ===== Các dữ liệu đọc từ từng slave =====
+    wire [31:0] ramRData, gpioRData, pwmRData;
+
+    // ===== CPU =====
+    datapath_pipeline_wb cpu1(
+	.clk(clk),
+	.rst_n(~rst),
+	.zero,
+	output [31:0] pc,
+
+    output [31:0] bAddr,
+    input [31:0] bRData,
+    output [31:0] write_data,
+    output MemRead,
+    output MemWrite
+);
+
+    // ===== Instruction ROM =====
+    rom instr_rom (
+        .imAddr(pc[7:2]),     // Word-aligned
+        .imData(instr)
+    );
+
+    // ===== RAM (Memory Slave) =====
+    ram ram_slave (
+        .clk(clk),
+        .a(bAddr),
+        .we(bSel[0] & memWrite),
+        .wd(bWData),
+        .rd(ramRData)
+    );
+
+    // ===== GPIO Slave =====
+    gpio gpio_slave (
+        .clk(clk),
+        .rst(rst),
+        .bSel(bSel[1]),
+        .bWrite(memWrite),
+        .bAddr(bAddr),
+        .bWData(bWData),
+        .bRData(gpioRData),
+        .gpioInput(gpioInput),
+        .gpioOutput(gpioOutput)
+    );
+
+    // ===== PWM Slave =====
+    pwm pwm_slave (
+        .clk(clk),
+        .rst(rst),
+        .bSel(bSel[2]),
+        .bWrite(memWrite),
+        .bWData(bWData),
+        .bRData(pwmRData),
+        .pwmOutput(pwmOut)
+    );
+
+    // ===== Simple Bus: Decoder + Mux =====
+    simple_bus bus (
+        .bAddr(bAddr),
+        .bRData0(ramRData),
+        .bRData1(gpioRData),
+        .bRData2(pwmRData),
+        .bRData(bRData),
+        .bSel(bSel)
+    );
+
+endmodule

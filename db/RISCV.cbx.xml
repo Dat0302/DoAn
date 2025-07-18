@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="RISCV">
+		<CBX_INST_ENTRY INSTANCE_NAME="|system_top|cpu_pipeline5_wb:u_cpu|register_file_pipeline:u_rf|altsyncram:rf_rtl_0" CBX_FILE_NAME="altsyncram_48c1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|system_top|cpu_pipeline5_wb:u_cpu|register_file_pipeline:u_rf|altsyncram:rf_rtl_1" CBX_FILE_NAME="altsyncram_48c1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|system_top|wb_ram_wrapper:ram_wb|ram:u_ram|altsyncram:ram_rtl_0" CBX_FILE_NAME="altsyncram_29b1.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

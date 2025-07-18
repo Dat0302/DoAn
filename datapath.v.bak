@@ -1,0 +1,28 @@
+module datapath(
+	input clk,
+	input reset
+);
+
+	 wire pc_src;
+    wire reg_write;
+    wire alu_src;
+    wire mem_read;
+    wire mem_write;
+    wire mem_to_reg;
+    wire branch;
+    wire jump;
+    wire [3:0] alu_op;
+    wire [6:0] opcode;
+    wire [2:0] funct3;
+    wire [6:0] funct7;
+    wire zero_flag;
+    wire [31:0] pc,pc_new;
+	 
+	 
+	 pc r_pc(clk,rst_n,pc_new,pc);
+	 assign imAddr = pc >> 2;
+		
+		
+	 rom instr_rom(imAddr, imData);
+	 
+	 

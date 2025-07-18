@@ -1,0 +1,21 @@
+module forwarding (
+    input [4:0] rs1_ex, rs2_ex,     // Thanh ghi nguồn từ ID/EX
+    input [4:0] rd_mem, rd_wb,      // Thanh ghi đích từ EX/MEM và MEM/WB
+    input RegWrite_mem, RegWrite_wb, // Tín hiệu ghi thanh ghi
+    output reg [1:0] forwardA,      // Điều khiển đầu vào A của ALU
+    output reg [1:0] forwardB       // Điều khiển đầu vào B của ALU
+);
+    always @(*) begin
+        // Default: Dùng dữ liệu từ reg file
+        forwardA = 2'b00;
+        forwardB = 2'b00;
+
+        // Forward từ EX/MEM nếu có
+        if (RegWrite_mem && rd_mem != 0 && rd_mem == rs1_ex) forwardA = 2'b01;
+        if (RegWrite_mem && rd_mem != 0 && rd_mem == rs2_ex) forwardB = 2'b01;
+
+        // Forward từ MEM/WB nếu có (ưu tiên hơn EX/MEM)
+        if (RegWrite_wb && rd_wb != 0 && rd_wb == rs1_ex) forwardA = 2'b10;
+        if (RegWrite_wb && rd_wb != 0 && rd_wb == rs2_ex) forwardB = 2'b10;
+    end
+endmodule

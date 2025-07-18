@@ -1,0 +1,36 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/pc.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/register_file.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/ram.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/control_unit.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/alu_control.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/alu.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/imm_gen.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/if_id.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/id_ex.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/ex_mem.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/mem_wb.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/forwarding.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/bus_mux.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/bus_decoder.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/bus.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/gpio.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/register_we.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/datapath_pipeline_wb.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/top_module.v}
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/rom.v}
+
+vlog -vlog01compat -work work +incdir+D:/RISCV {D:/RISCV/tb_top.v}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver -L rtl_work -L work -voptargs="+acc"  tb_top
+
+add wave *
+view structure
+view signals
+run -all

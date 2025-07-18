@@ -1,0 +1,15 @@
+module mux_wb (
+    input  [31:0] d_ram,
+    input  [31:0] d_gpio,
+    input  [31:0] d_uart,
+    input   [2:0]     sel
+    output [31:0] rdata
+);
+    always @*
+		casez (bSel)
+			default : out = d_ram;
+			3'b??1 : out = d_ram;
+			3'b?10 : out = d_gpio;
+			3'b100 : out = d_uart;
+ endcase
+endmodule

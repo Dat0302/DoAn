@@ -1,0 +1,81 @@
+module wishbone_bus (
+    input         clk,
+    input         rst,
+    input  [31:0] wb_adr_i,
+    input  [31:0] wb_dat_i,
+    output [31:0] wb_dat_o,
+    input         wb_we_i,
+    input         wb_cyc_i,
+    input         wb_stb_i,
+    output        wb_ack_o,
+
+    // RAM Slave
+    output        ram_sel,
+    output        ram_we,
+    output [31:0] ram_adr,
+    output [31:0] ram_dat_o,
+    input  [31:0] ram_dat_i,
+    input         ram_ack,
+
+    // GPIO Slave
+    output        gpio_sel,
+    output        gpio_we,
+    output [31:0] gpio_adr,
+    output [31:0] gpio_dat_o,
+    input  [31:0] gpio_dat_i,
+    input         gpio_ack,
+
+    // UART Slave
+    output        uart_sel,
+    output        uart_we,
+    output [31:0] uart_adr,
+    output [31:0] uart_dat_o,
+    input  [31:0] uart_dat_i,
+    input         uart_ack
+);
+
+    wire sel_ram, sel_gpio, sel_uart;
+
+    // Address decode
+    decoder_wb u_dec (
+        .addr(wb_adr_i),
+        .sel_ram(sel_ram),
+        .sel_gpio(sel_gpio),
+        .sel_uart(sel_uart)
+    );
+
+    // Select signals
+    assign ram_sel     = sel_ram  & wb_stb_i & wb_cyc_i;
+    assign gpio_sel    = sel_gpio & wb_stb_i & wb_cyc_i;
+    assign uart_sel    = sel_uart & wb_stb_i & wb_cyc_i;
+
+    // Common signals
+    assign ram_we      = wb_we_i;
+    assign gpio_we     = wb_we_i;
+    assign uart_we     = wb_we_i;
+
+    assign ram_adr     = wb_adr_i;
+    assign gpio_adr    = wb_adr_i;
+    assign uart_adr    = wb_adr_i;
+
+    assign ram_dat_o   = wb_dat_i;
+    assign gpio_dat_o  = wb_dat_i;
+    assign uart_dat_o  = wb_dat_i;
+
+    // Data mux
+    mux_wb u_mux (
+        .d_ram(ram_dat_i),
+        .d_gpio(gpio_dat_i),
+        .d_uart(uart_dat_i),
+        .sel_ram(ram_sel),
+        .sel_gpio(gpio_sel),
+        .sel_uart(uart_sel),
+        .rdata(wb_dat_o)
+    );
+
+    // Ack mux (or logic)
+    assign wb_ack_o = (sel_ram  & ram_ack) |
+                      (sel_gpio & gpio_ack) |
+                      (sel_uart & uart_ack);
+
+endmodule
